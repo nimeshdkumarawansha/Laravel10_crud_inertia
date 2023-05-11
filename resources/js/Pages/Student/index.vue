@@ -9,13 +9,15 @@
                         <form @submit.prevent="studentStore" class="forms-sample">
                             <div class="form-group">
                                 <label for="input1">Name</label>
-                                <input type="text" class="form-control" v-model="studentform.name" id="input1" placeholder="Name">
+                                <input type="text" class="form-control" name="name" v-model="studentform.name" id="input1"
+                                    placeholder="Name">
                             </div>
                             <div class="form-group">
                                 <label for="input2">Age</label>
-                                <input type="text" class="form-control" v-model="studentform.age" id="input2" placeholder="Age">
+                                <input type="text" class="form-control" name="age" v-model="studentform.age" id="input2"
+                                    placeholder="Age">
                             </div>
-                            <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
+                            <button type="submit" class="btn btn-primary text-dark me-2 mt-3">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -50,11 +52,12 @@
                                     }}</label>
                                 </td>
                                 <td><button type="button" @click.prevent="deleteStudent(student.id)"
-                                        class="btn btn-danger">Delete</button></td>
-                                <td><button type="button" @click.prevent="editStudent(student.id)" class="btn btn-success">Edit</button>
+                                        class="btn btn-danger text-dark">Delete</button></td>
+                                <td><button type="button" @click.prevent="editStudent(student.id)"
+                                        class="btn btn-success text-dark">Edit</button>
                                 </td>
                                 <td><button type="button" @click.prevent="studentStatus(student.id)"
-                                        class="btn btn-primary">Status</button> </td>
+                                        class="btn btn-primary text-dark">Status</button> </td>
                             </tr>
 
                         </tbody>
@@ -64,29 +67,29 @@
         </template>
         <template #modals>
             <!-- Modal -->
-            <div class="modal fade" id="editStudent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="studentEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form @submit.prevent="studentUpdate" class="row g-3">
 
                             <div class="modal-body">
 
-                                <div class="col-auto">
-                                    <input type="text" class="form-control" v-model="student_update_form.name" id="inputu1"
+                                <div class="col-auto mt-3">
+                                    <input type="text" class="form-control" name="name" v-model="student_update_form.name" 
                                         placeholder="Name">
                                 </div>
-                                <div class="col-auto">
-                                    <input type="text" class="form-control" v-model="student_update_form.age" id="inputu2"
+                                <div class="col-auto mt-3">
+                                    <input type="text" class="form-control" name="age" v-model="student_update_form.age"
                                         placeholder="Age">
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-secondary text-dark" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary text-dark">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -103,17 +106,15 @@ import axios from 'axios';
 export default {
     components: {
         AppLayout
-    }, data() {
+    },
+    data() {
         return {
             student_list: [],
 
-            studentform: {
-                name: '',
-                age: '',
-            },
+            studentform: {},
             student_update_form: {
                 name: '',
-                age: '',
+                age: ''
             },
         }
     },
@@ -130,34 +131,32 @@ export default {
             this.getStudents();
             this.studentform = {
                 name: '',
-                email: '',
-                password: '',
+                age: ''
             }
         },
         async deleteStudent(id) {
-            await axios.delete(route('student.delete'), id)
+            await axios.delete(route('student.delete', id))
             this.getStudents();
-
         },
         async studentStatus(id) {
-            await axios.get(route('student.status'), id)
+            await axios.get(route('student.status', id))
             this.getStudents();
-        }, 
+        },
         async editStudent(id) {
-           const student = (await axios.get(route('student.edit'), id)).data
+            const student = (await axios.get(route('student.get', id))).data
             this.student_update_form = student
-            $('editStudent').modal('show');
+            $('#studentEdit').modal('show');
         },
         async studentUpdate() {
-            await axios.post(route('student.update', this.student_update_form.id),this.student_update_form)
+            await axios.post(route('student.update', this.student_update_form.id), this.student_update_form)
             this.getStudents();
             this.student_update_form = {
                 name: '',
-                age: '',
+                age: ''
             }
-            $('editStudent').modal('hide');
+            $('#studentEdit').modal('hide');
         },
-      
+
     }
 }
 </script>

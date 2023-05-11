@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <NavBar />
         <slot name="content" />
         <slot name="modals" />
     </div>

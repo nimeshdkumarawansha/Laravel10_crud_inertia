@@ -36,12 +36,12 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::prefix('/student')->group(function(){
+Route::prefix('student')->group(function(){
     Route::get('/',[StudentController::class,"index"])->name('student');
     Route::get('/list',[StudentController::class,"list"])->name('student.list');
     Route::get('/{student_id}/get',[StudentController::class,"get"])->name('student.get');
     Route::post('/store',[StudentController::class,"store"])->name('student.store');
-    Route::get('/edit',[StudentController::class,"edit"])->name('student.edit');
+    Route::get('/{student_id}/edit',[StudentController::class,"edit"])->name('student.edit');
     Route::post('/{student_id}/update',[StudentController::class,"update"])->name('student.update');
     Route::delete('/{student_id}/delete',[StudentController::class,"delete"])->name('student.delete');
     Route::get('/{student_id}/status',[StudentController::class,"status"])->name('student.status');

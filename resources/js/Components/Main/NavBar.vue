@@ -1,15 +1,12 @@
 <template>
     <div>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default mb-5">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
-                    <li class="active"><Link :href="route('dashboard')">Home</Link></li>
-                    <!-- <li><Link :href="route('todo')">Page 1</Link></li> -->
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
+                  
                 </ul>
-                <Link :href="route('login')">Login</Link> ||
-                <Link :href="route('register')">Register</Link>
+                <Link :href="route('login')" class="link-success fw-bold">Login</Link> ||
+                <Link :href="route('register')" class="link-success fw-bold">Register</Link>
             </div>
         </nav>
     </div>

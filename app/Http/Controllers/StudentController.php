@@ -16,6 +16,7 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         return StudentFacades::store($request->all());
     }
 
@@ -40,11 +41,11 @@ class StudentController extends Controller
     }
     public function edit(Request $request)
     {
-        $response['student'] = StudentFacades::get($request['student_id']);
-        return view('pages.student.edit')->with($response);
+        $student =  StudentFacades::get($request);
+        return response()->json($student);
     }
     public function update(Request $request, $student_id)
     {
-        return StudentFacades::update($request, $student_id);
+        return StudentFacades::update($request->all(), $student_id);
     }
 }
